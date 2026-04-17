@@ -10,7 +10,7 @@ Method: POST
 
 엔드포인트: http://localhost:8080/schedules
 
-Description: 일정 제목, 일정 내용, 일정 작성자, 비밀번호를 입력받아 새로운 일정을 저장합니다.
+Description: 일정 제목, 일정 내용, 일정 작성자를 입력받아 새로운 일정을 저장합니다.
 
 Request (Body)
 ```
@@ -18,20 +18,18 @@ JSON
 {
     "title": "일정 제목",
     "content": "일정 내용",
-    "author": "일정 작성자",
-    "password": "password123"
+    "author": "일정 작성자"
 }
 ```
 ---
-Response `(201 Created)
-비밀번호는 응답에 포함하지 않습니다.`
+Response `(201 Created)`
 ```
 JSON
 {
     "id": 1,
     "title": "일정 제목",
     "content": "일정 내용",
-    "manager": "일정 작성자",
+    "author": "일정 작성자",
     "createdAt": "2026-04-16T20:15:29",
     "modifedAt": "2026-04-16T20:15:29"
 }
@@ -47,7 +45,7 @@ Description: 저장된 일정 목록을 전체 조회합니다.
 Request
 `Body 없음`
 
-Response `(200 OK) 비밀번호는 응답에 포함하지 않습니다.`
+Response `(200 OK)`
 ```
 JSON
 [
@@ -79,7 +77,7 @@ Description: 선택한 scheduleId에 해당하는 단일 일정 정보를 조회
 
 Request `Path Variable: scheduleId (조회할 일정의 고유 식별자)`
 
-Response `(200 OK) 비밀번호는 응답에 포함하지 않습니다.`
+Response `(200 OK)`
 
 ```
 JSON
@@ -98,7 +96,7 @@ Method: PUT
 
 엔드포인트: http://localhost:8080/schedules/{scheduleId}
 
-Description: 선택한 일정의 제목, 내용, 담당자를 수정합니다. 서버에 저장된 비밀번호와 요청으로 전달된 비밀번호가 일치할 때만 수정이 가능합니다.
+Description: 선택한 일정의 제목, 내용, 작성자를 수정합니다.
 
 Request `(Body),
 Path Variable: scheduleId`
@@ -108,13 +106,12 @@ JSON
 {
     "title": "변경할 일정 제목",
     "content": "변경할 일정 내용",
-    "author": "변경할 일정 작성자",
-    "password": "password123"
+    "author": "변경할 일정 작성자"
 }
 
 ```
 ---
-Response `(200 OK) 비밀번호는 응답에 포함하지 않습니다.`
+Response `(200 OK)`
 ```
 JSON
 {
@@ -132,15 +129,9 @@ Method: DELETE
 
 엔드포인트: http://localhost:8080/schedules/{scheduleId}
 
-Description: 선택한 일정을 삭제합니다. 서버에 저장된 비밀번호와 요청으로 전달된 비밀번호가 일치할 때만 삭제가 가능합니다.
+Description: 선택한 일정을 삭제합니다.
 
-Request `(Body), Path Variable: id`
-```
-JSON
-{
-    "password": "password123"
-}
-```
+Request `없음`
 Response `(204 No Content)`
 
 ---
