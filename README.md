@@ -4,7 +4,7 @@
 3. 프로젝트 구조
 
 ---
-
+## `실패 케이스 작성 예정`
 # 1. 일정 작성 (Create Schedule)
 Method: POST
 
@@ -143,3 +143,7 @@ JSON
 ```
 Response `(204 No Content)`
 
+---
+# ERD 이미지
+
+<img width="496" height="292" alt="Image" src="https://github.com/user-attachments/assets/87933aef-b611-41b6-9d3a-f3a1d1a08cf1" />
