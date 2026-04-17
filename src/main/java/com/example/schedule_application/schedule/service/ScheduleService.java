@@ -17,46 +17,27 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public CreateScheduleResponse saveSchedule(CreateScheduleRequest request) {
+    public ScheduleResponse saveSchedule(CreateScheduleRequest request) {
         Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getAuthor());
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        return new CreateScheduleResponse(
-                savedSchedule.getId(),
-                savedSchedule.getTitle(),
-                savedSchedule.getContent(),
-                savedSchedule.getAuthor(),
-                savedSchedule.getCreatedAt(),
-                savedSchedule.getModifiedAt()
-        );
+
+        // 왼쪽 타입을 오른쪽 인수를 통해서 만들겠다.
+        return ScheduleResponse.from(savedSchedule);
     }
 
     @Transactional(readOnly = true)
-    public List<GetSchedulesResponse> findAll() {
+    public List<ScheduleResponse> findAll() {
         List<Schedule> scheduleList = scheduleRepository.findAll();
 
         return scheduleList.stream()
-                .map(schedule -> new GetSchedulesResponse(
-                        schedule.getId(),
-                        schedule.getTitle(),
-                        schedule.getContent(),
-                        schedule.getAuthor(),
-                        schedule.getCreatedAt(),
-                        schedule.getModifiedAt()
-                ))
-                .toList();
+                .map(ScheduleResponse::from).toList();
     }
 
     @Transactional(readOnly = true)
-    public GetSchedulesResponse findOne(Long scheduleId) {
+    public ScheduleResponse findOne(Long scheduleId) {
         Schedule schedule = scheduleValidate(scheduleId);
-        return new GetSchedulesResponse(
-                schedule.getId(),
-                schedule.getTitle(),
-                schedule.getContent(),
-                schedule.getAuthor(),
-                schedule.getCreatedAt(),
-                schedule.getModifiedAt()
-        );
+
+        return ScheduleResponse.from(schedule);
     }
 
     private Schedule scheduleValidate(Long scheduleId) {
@@ -64,17 +45,10 @@ public class ScheduleService {
     }
 
     @Transactional
-    public UpdateScheduleResponse updateSchedule(UpdateScheduleRequest request, Long scheduleId) {
+    public ScheduleResponse updateSchedule(UpdateScheduleRequest request, Long scheduleId) {
         Schedule schedule = scheduleValidate(scheduleId);
         schedule.updateSchedule(request.getTitle(), request.getContent(), request.getAuthor());
-        return new UpdateScheduleResponse(
-                schedule.getId(),
-                schedule.getTitle(),
-                schedule.getContent(),
-                schedule.getAuthor(),
-                schedule.getCreatedAt(),
-                schedule.getModifiedAt()
-        );
+        return ScheduleResponse.from(schedule);
     }
 
     @Transactional

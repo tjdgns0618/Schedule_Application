@@ -32,4 +32,8 @@ public class Schedule extends BaseEntity {
         this.content = content;
         this.author = author;
     }
+
+    public static Schedule from(Schedule schedule) {
+        return new Schedule(schedule.getTitle(), schedule.getContent(), schedule.getAuthor());
+    }
 }

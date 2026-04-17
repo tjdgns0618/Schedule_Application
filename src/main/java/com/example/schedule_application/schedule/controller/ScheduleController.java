@@ -18,29 +18,29 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<CreateScheduleResponse> saveSchedule(@Valid @RequestBody CreateScheduleRequest request) {
-        CreateScheduleResponse createResponse = scheduleService.saveSchedule(request);
+    public ResponseEntity<ScheduleResponse> saveSchedule(@Valid @RequestBody CreateScheduleRequest request) {
+        ScheduleResponse createResponse = scheduleService.saveSchedule(request);
         return new ResponseEntity<>(createResponse, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<GetSchedulesResponse>> getAllSchedule() {
-        List<GetSchedulesResponse> getScheduleResponseList = scheduleService.findAll();
+    public ResponseEntity<List<ScheduleResponse>> getAllSchedule() {
+        List<ScheduleResponse> getScheduleResponseList = scheduleService.findAll();
         return new ResponseEntity<>(getScheduleResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{scheduleId}")
-    public ResponseEntity<GetSchedulesResponse> getOneSchedule(@PathVariable Long scheduleId) {
-        GetSchedulesResponse getScheduleResponse = scheduleService.findOne(scheduleId);
+    public ResponseEntity<ScheduleResponse> getOneSchedule(@PathVariable Long scheduleId) {
+        ScheduleResponse getScheduleResponse = scheduleService.findOne(scheduleId);
         return new ResponseEntity<>(getScheduleResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{scheduleId}")
-    public ResponseEntity<UpdateScheduleResponse> updateSchedule(
+    public ResponseEntity<ScheduleResponse> updateSchedule(
             @Valid @RequestBody UpdateScheduleRequest request,
             @PathVariable Long scheduleId
     ) {
-        UpdateScheduleResponse updateScheduleResponse = scheduleService.updateSchedule(request, scheduleId);
+        ScheduleResponse updateScheduleResponse = scheduleService.updateSchedule(request, scheduleId);
         return new ResponseEntity<>(updateScheduleResponse, HttpStatus.OK);
     }
 
