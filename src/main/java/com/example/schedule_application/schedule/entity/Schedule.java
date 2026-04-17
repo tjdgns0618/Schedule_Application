@@ -1,6 +1,7 @@
 package com.example.schedule_application.schedule.entity;
 
 import com.example.schedule_application.common.entity.BaseEntity;
+import com.example.schedule_application.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,29 +12,28 @@ import lombok.NoArgsConstructor;
 @Table(name = "schedules")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Schedule extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 50, nullable = false)
     private String title;
+
     @Column(nullable = false)
     private String content;
-    @Column(length = 25, nullable = false)
-    private String author;
 
-    public Schedule(String title, String content, String author) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Schedule(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
-    public void updateSchedule(String title,  String content, String author) {
+    public void updateSchedule(String title,  String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
-    }
-
-    public static Schedule from(Schedule schedule) {
-        return new Schedule(schedule.getTitle(), schedule.getContent(), schedule.getAuthor());
     }
 }
