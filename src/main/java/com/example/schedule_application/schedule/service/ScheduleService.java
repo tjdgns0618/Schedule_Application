@@ -1,9 +1,7 @@
 package com.example.schedule_application.schedule.service;
 
 import com.example.schedule_application.common.customException.ScheduleNotFoundException;
-import com.example.schedule_application.schedule.dto.CreateScheduleRequest;
-import com.example.schedule_application.schedule.dto.CreateScheduleResponse;
-import com.example.schedule_application.schedule.dto.GetSchedulesResponse;
+import com.example.schedule_application.schedule.dto.*;
 import com.example.schedule_application.schedule.entity.Schedule;
 import com.example.schedule_application.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,5 +62,19 @@ public class ScheduleService {
 
     private Schedule scheduleValidate(Long scheduleId) {
         return scheduleRepository.findById(scheduleId).orElseThrow(ScheduleNotFoundException::new);
+    }
+
+    @Transactional
+    public UpdateScheduleResponse updateSchedule(UpdateScheduleRequest request, Long scheduleId) {
+        Schedule schedule = scheduleValidate(scheduleId);
+        schedule.updateSchedule(request.getTitle(), request.getContent(), request.getAuthor());
+        return new UpdateScheduleResponse(
+                schedule.getId(),
+                schedule.getTitle(),
+                schedule.getContent(),
+                schedule.getAuthor(),
+                schedule.getCreatedAt(),
+                schedule.getModifiedAt()
+        );
     }
 }
