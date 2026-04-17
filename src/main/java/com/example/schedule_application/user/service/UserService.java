@@ -2,7 +2,7 @@ package com.example.schedule_application.user.service;
 
 import com.example.schedule_application.user.dto.CreateUserRequest;
 import com.example.schedule_application.user.dto.UpdateUserRequest;
-import com.example.schedule_application.user.dto.UserResponse;
+import com.example.schedule_application.user.dto.UserAllDetailsResponse;
 import com.example.schedule_application.user.entity.User;
 import com.example.schedule_application.user.exception.UserNotFoundException;
 import com.example.schedule_application.user.repository.UserRepository;
@@ -23,31 +23,31 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponse signUp(CreateUserRequest request) {
+    public UserAllDetailsResponse signUp(CreateUserRequest request) {
         User user = new User(request.getName(), request.getEmail());
         User savedUser = userRepository.save(user);
-        return UserResponse.from(savedUser);
+        return UserAllDetailsResponse.from(savedUser);
     }
 
     @Transactional(readOnly = true)
-    public List<UserResponse> findAllUser() {
+    public List<UserAllDetailsResponse> findAllUser() {
         List<User> userList = userRepository.findAll();
 
         return userList.stream()
-                .map(UserResponse::from).toList();
+                .map(UserAllDetailsResponse::from).toList();
     }
 
     @Transactional(readOnly = true)
-    public UserResponse findOneUser(Long userId) {
+    public UserAllDetailsResponse findOneUser(Long userId) {
         User findedUser = userValidation(userId);
-        return UserResponse.from(findedUser);
+        return UserAllDetailsResponse.from(findedUser);
     }
 
 
-    public UserResponse update(Long userId, UpdateUserRequest request) {
+    public UserAllDetailsResponse update(Long userId, UpdateUserRequest request) {
         User user = userValidation(userId);
         user.updateUserDetails(request.getName(), request.getEmail());
-        return UserResponse.from(user);
+        return UserAllDetailsResponse.from(user);
     }
 
     @Transactional

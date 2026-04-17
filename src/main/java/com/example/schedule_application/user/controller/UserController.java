@@ -2,7 +2,7 @@ package com.example.schedule_application.user.controller;
 
 import com.example.schedule_application.user.dto.CreateUserRequest;
 import com.example.schedule_application.user.dto.UpdateUserRequest;
-import com.example.schedule_application.user.dto.UserResponse;
+import com.example.schedule_application.user.dto.UserAllDetailsResponse;
 import com.example.schedule_application.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,29 +19,29 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
-        UserResponse createdUserResponse = userService.signUp(request);
+    public ResponseEntity<UserAllDetailsResponse> createUser(@RequestBody CreateUserRequest request) {
+        UserAllDetailsResponse createdUserResponse = userService.signUp(request);
         return new ResponseEntity<>(createdUserResponse, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<UserResponse> userResponseList = userService.findAllUser();
+    public ResponseEntity<List<UserAllDetailsResponse>> getAllUsers() {
+        List<UserAllDetailsResponse> userResponseList = userService.findAllUser();
         return new ResponseEntity<>(userResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponse> getOneUser(@PathVariable Long userId) {
-        UserResponse userResponse = userService.findOneUser(userId);
+    public ResponseEntity<UserAllDetailsResponse> getOneUser(@PathVariable Long userId) {
+        UserAllDetailsResponse userResponse = userService.findOneUser(userId);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserResponse> updateUser(
+    public ResponseEntity<UserAllDetailsResponse> updateUser(
             @PathVariable Long userId,
             @RequestBody UpdateUserRequest request
     ) {
-        UserResponse userResponse = userService.update(userId, request);
+        UserAllDetailsResponse userResponse = userService.update(userId, request);
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
