@@ -34,6 +34,7 @@ JSON
     "modifedAt": "2026-04-16T20:15:29"
 }
 ```
+
 ---
 # 2. 전체 일정 조회 (Get All Schedules)
 Method: GET
