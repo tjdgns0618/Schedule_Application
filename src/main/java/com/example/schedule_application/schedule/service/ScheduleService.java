@@ -1,6 +1,6 @@
 package com.example.schedule_application.schedule.service;
 
-import com.example.schedule_application.common.customException.ScheduleNotFoundException;
+import com.example.schedule_application.schedule.exception.ScheduleNotFoundException;
 import com.example.schedule_application.schedule.dto.*;
 import com.example.schedule_application.schedule.entity.Schedule;
 import com.example.schedule_application.schedule.repository.ScheduleRepository;
