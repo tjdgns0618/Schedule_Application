@@ -22,9 +22,13 @@ public class User extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
-    public User(String name, String email) {
+    @Column(nullable = false)
+    private String password;
+
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     public void updateUserDetails(String name, String email) {

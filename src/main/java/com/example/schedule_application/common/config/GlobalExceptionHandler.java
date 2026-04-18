@@ -2,6 +2,7 @@ package com.example.schedule_application.common.config;
 
 import com.example.schedule_application.common.customException.ServiceException;
 import com.example.schedule_application.common.dto.ErrorResponse;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -33,7 +34,7 @@ public class GlobalExceptionHandler {
                 .getFieldErrors()
                 .stream()
                 .findFirst()
-                .map(fieldError -> fieldError.getDefaultMessage())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .orElse("입력 값이 올바르지 않습니다.");
         // dto로 전달을 해줘야 json으로 번역을 해준다. new ErrorResponse(String)
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));

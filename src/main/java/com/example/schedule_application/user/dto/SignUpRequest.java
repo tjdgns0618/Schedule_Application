@@ -1,11 +1,12 @@
 package com.example.schedule_application.user.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class CreateUserRequest {
+public class SignUpRequest {
 
     @NotBlank(message = "이름을 빈칸으로 하실 수 없습니다.")
     private final String name;
@@ -13,8 +14,12 @@ public class CreateUserRequest {
     @Email(message = "이미 존재하는 이메일입니다.")
     private final String email;
 
-    public CreateUserRequest(String name, String email) {
+    @Min(value = 8, message = "비밀번호는 8글자 이상이어야 합니다.")
+    private final String password;
+
+    public SignUpRequest(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 }
