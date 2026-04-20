@@ -3,7 +3,7 @@ package com.example.schedule_application.schedule.controller;
 import com.example.schedule_application.schedule.dto.*;
 import com.example.schedule_application.schedule.service.ScheduleService;
 import com.example.schedule_application.user.dto.SessionUser;
-import com.example.schedule_application.user.exception.LoginRequiredException;
+import com.example.schedule_application.common.customException.LoginRequiredException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
