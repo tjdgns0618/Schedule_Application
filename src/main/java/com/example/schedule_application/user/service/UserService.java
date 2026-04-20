@@ -89,7 +89,4 @@ public class UserService {
         userValidation(userId);
         userRepository.deleteById(userId);
     }
-
-
-
 }

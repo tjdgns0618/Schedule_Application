@@ -478,6 +478,13 @@ Error Response
 }
 ```
 
+- `401 Unauthorized(권한 없음)`
+```
+{
+    "message": "권한이 없습니다."
+}
+```
+
 - `404 Not Found(존재하지 않는 유저)`
 ```
 {
@@ -507,6 +514,13 @@ Error Response
 ```
 {
     "message": "JSON 문법에 맞게 요청을 작성해주세요."
+}
+```
+
+- `401 Unauthorized(권한 없음)`
+```
+{
+    "message": "권한이 없습니다."
 }
 ```
 

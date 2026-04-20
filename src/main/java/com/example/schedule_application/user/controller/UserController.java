@@ -74,8 +74,8 @@ public class UserController {
             HttpSession session
     ) {
         validateSessionUser(sessionUser);
-        session.invalidate();
         userService.delete(userId, sessionUser.getId());
+        session.invalidate();
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
