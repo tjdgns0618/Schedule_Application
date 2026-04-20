@@ -16,39 +16,39 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
 
-    @Transactional
-    public ScheduleResponse saveSchedule(CreateScheduleRequest request) {
-        Schedule schedule = new Schedule(request.getTitle(), request.getContent(), request.getAuthor());
-        Schedule savedSchedule = scheduleRepository.save(schedule);
-
-        // 왼쪽 타입을 오른쪽 인수를 통해서 만들겠다.
-        return ScheduleResponse.from(savedSchedule);
-    }
-
-    @Transactional(readOnly = true)
-    public List<ScheduleResponse> findAll() {
-        List<Schedule> scheduleList = scheduleRepository.findAll();
-
-        return scheduleList.stream()
-                .map(ScheduleResponse::from).toList();
-    }
-
-    @Transactional(readOnly = true)
-    public ScheduleResponse findOne(Long scheduleId) {
-        Schedule schedule = scheduleValidate(scheduleId);
-
-        return ScheduleResponse.from(schedule);
-    }
-
     private Schedule scheduleValidate(Long scheduleId) {
         return scheduleRepository.findById(scheduleId).orElseThrow(ScheduleNotFoundException::new);
     }
 
     @Transactional
-    public ScheduleResponse updateSchedule(UpdateScheduleRequest request, Long scheduleId) {
+    public ScheduleAllDetailsResponse saveSchedule(CreateScheduleRequest request) {
+        Schedule schedule = new Schedule(request.getTitle(), request.getContent());
+        Schedule savedSchedule = scheduleRepository.save(schedule);
+
+        // 왼쪽 타입을 오른쪽 인수를 통해서 만들겠다.
+        return ScheduleAllDetailsResponse.from(savedSchedule);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ScheduleAllDetailsResponse> findAll() {
+        List<Schedule> scheduleList = scheduleRepository.findAll();
+
+        return scheduleList.stream()
+                .map(ScheduleAllDetailsResponse::from).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public ScheduleAllDetailsResponse findOne(Long scheduleId) {
         Schedule schedule = scheduleValidate(scheduleId);
-        schedule.updateSchedule(request.getTitle(), request.getContent(), request.getAuthor());
-        return ScheduleResponse.from(schedule);
+
+        return ScheduleAllDetailsResponse.from(schedule);
+    }
+
+    @Transactional
+    public ScheduleAllDetailsResponse updateSchedule(UpdateScheduleRequest request, Long scheduleId) {
+        Schedule schedule = scheduleValidate(scheduleId);
+        schedule.updateSchedule(request.getTitle(), request.getContent());
+        return ScheduleAllDetailsResponse.from(schedule);
     }
 
     @Transactional

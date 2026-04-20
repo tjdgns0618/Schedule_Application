@@ -12,12 +12,8 @@ public class CreateScheduleRequest {
     @NotBlank(message = "내용이 있어야 합니다.")
     private final String content;
 
-    @NotBlank(message = "작성자명을 입력해야 합니다.")
-    private final String author;
-
-    public CreateScheduleRequest(String title, String content, String author) {
+    public CreateScheduleRequest(String title, String content) {
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 }
