@@ -32,7 +32,7 @@ public class UserController {
         SessionUser sessionUser = SessionUser.from(user);
         session.setAttribute("loginUser", sessionUser);
 
-        LoginResponse response = new LoginResponse(user.getId(), user.getName(), user.getEmail());
+        LoginResponse response = LoginResponse.from(user);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
