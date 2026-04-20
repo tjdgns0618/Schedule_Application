@@ -2,7 +2,7 @@ package com.example.schedule_application.user.controller;
 
 import com.example.schedule_application.user.dto.*;
 import com.example.schedule_application.user.entity.User;
-import com.example.schedule_application.user.exception.LoginRequiredException;
+import com.example.schedule_application.common.customException.LoginRequiredException;
 import com.example.schedule_application.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

@@ -67,7 +67,7 @@ Method: GET
 Description: 저장된 일정 목록을 전체 조회합니다.
 
 Request
-`Body 없음`
+- Body `없음`
 
 ---
 
@@ -103,7 +103,8 @@ Method: GET
 
 Description: 선택한 scheduleId에 해당하는 단일 일정 정보를 조회합니다.
 
-Request `Path Variable: scheduleId (조회할 일정의 고유 식별자)`
+Request 
+- Path Variable: `scheduleId (조회할 일정의 고유 식별자)`
 
 ---
 
@@ -143,7 +144,7 @@ Description: 세션이 유효한 로그인 유저만 일정을 수정할 수 있
 
 Request 
 - Headers : `Cookie: JSESSIONID=AB12CD34EF56GH78`
-- Path Variable: scheduleId
+- Path Variable : `scheduleId`
 - Body
 
 ```
@@ -208,7 +209,7 @@ Description: 세션이 유효한 로그인 유저만 일정을 삭제할 수 있
 
 Request
 - Headers : `Cookie: JSESSIONID=AB12CD34EF56GH78`
-- Path Variable: scheduleId
+- Path Variable : `scheduleId`
 
 ---
 
@@ -243,7 +244,8 @@ Description: 이름, 이메일, 비밀번호를 입력받아 새로운 유저로
 
 DB에 존재하는 이미 존재하는 이메일은 사용 불가능합니다.
 
-Request `Body`
+Request 
+- Body
 
 ```
 JSON
@@ -296,7 +298,8 @@ URL: http://localhost:8080/users/login
 
 Description: 이메일과 비밀번호를 확인하여 로그인을 수행하고 세션 쿠키를 발급합니다.
 
-Request `Body`
+Request 
+- Body
 ```
 JSON
 {
@@ -355,7 +358,8 @@ URL: http://localhost:8080/users
 
 Description: 데이터베이스에 저장된 모든 유저의 목록을 조회합니다.
 
-Request `Body 없음`
+Request 
+- Body `없음`
 
 ---
 
@@ -399,7 +403,7 @@ URL: http://localhost:8080/users/{userId}
 
 Description: 선택한 userId에 해당하는 단일 유저의 상세 정보를 조회합니다.
 
-Request `Path Variable: userId (조회할 유저의 식별자)`
+Request Path Variable: `userId (조회할 유저의 식별자)`
 
 ---
 
@@ -442,7 +446,7 @@ URL: http://localhost:8080/users/{userId}
 Description: 선택한 유저의 이름 또는 이메일을 수정합니다. 수정이 완료되면 modifiedAt 값이 갱신됩니다.
 
 Request 
-- Path Variable: userId
+- Path Variable: `userId`
 - Body 
 
 ```
@@ -501,7 +505,9 @@ URL: http://localhost:8080/users/{userId}
 
 Description: 선택한 유저의 정보를 데이터베이스에서 삭제합니다.
 
-Request `Path Variable: userId`
+Request 
+
+- Path Variable: `userId`
 
 ---
 
@@ -533,6 +539,98 @@ Error Response
 
 ---
 
+# 1. 댓글 작성 (Create Comment)
+Method: POST
+
+URL: http://localhost:8080/schedules/{scheduleId}/comments
+
+Description: 선택한 일정에 댓글을 작성합니다.
+
+Request 
+- Headers : `Cookie: JSESSIONID=AB12CD34EF56GH78`
+- Path Variable: `scheduleId`
+- body
+```
+{
+    "content": "정말 재밌는 일정이네요." 
+}
+```
+
+---
+
+Response `201 Created`
+```
+{
+    "id": 1,
+    "content": "정말 재밌는 일정이네요.",
+    "scheduleTitle": "일정제목",
+    "userName": "양성훈",
+    "createdAt": "2026-04-20T16:56:44.3460818",
+    "modifiedAt": "2026-04-20T16:56:44.3460818"
+}
+```
+---
+
+Error Response
+- `400 Bad Request(잘못된 요청)`
+```
+{
+    "message": "JSON 문법에 맞게 요청을 작성해주세요."
+}
+```
+
+- `401 Unauthorized(세션 없음)`
+```
+{
+    "message": "로그인이 필요한 서비스입니다."
+}
+```
+
+- `404 Not Found(존재하지 않는 일정)`
+```
+{
+    "message": "존재하지 않는 일정입니다."
+}
+```
+
+---
+
+# 1. 댓글 조회 (Get Comment)
+Method: GET
+
+URL: http://localhost:8080/comments
+
+Description: 모든 댓글을 조회합니다.
+
+Request
+- body `없음`
+
+---
+
+Response `200 OK`
+```
+[
+    {
+        "id": 1,
+        "content": "댓글 1",
+        "scheduleTitle": "일정 제목 1",
+        "userName": "작성자명 1",
+        "createdAt": "2026-04-20T16:56:40.391114",
+        "modifiedAt": "2026-04-20T16:56:40.391114"
+    },
+    {
+        "id": 2,
+        "content": "댓글 2",
+        "scheduleTitle": "일정 제목 2",
+        "userName": "작성자명 2",
+        "createdAt": "2026-04-20T16:56:41.362813",
+        "modifiedAt": "2026-04-20T16:56:41.362813"
+    }
+]
+```
+
+---
+
 # ERD 이미지
 
-<img width="975" height="235" alt="Image" src="https://github.com/user-attachments/assets/734e463d-77c4-4a12-9f6f-96ca449505c1" />
+<img width="914" height="597" alt="Image" src="https://github.com/user-attachments/assets/b755de03-6090-4f85-be50-2ffa0a84d013" />

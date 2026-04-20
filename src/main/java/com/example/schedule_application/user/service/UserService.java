@@ -1,15 +1,15 @@
 package com.example.schedule_application.user.service;
 
 import com.example.schedule_application.common.config.PasswordEncoder;
-import com.example.schedule_application.schedule.exception.NoPermissionException;
+import com.example.schedule_application.common.customException.NoPermissionException;
 import com.example.schedule_application.user.dto.LoginRequest;
 import com.example.schedule_application.user.dto.SignUpRequest;
 import com.example.schedule_application.user.dto.UpdateUserRequest;
 import com.example.schedule_application.user.dto.UserAllDetailsResponse;
 import com.example.schedule_application.user.entity.User;
-import com.example.schedule_application.user.exception.DuplicateEmailException;
-import com.example.schedule_application.user.exception.PasswordNotMatchException;
-import com.example.schedule_application.user.exception.UserNotFoundException;
+import com.example.schedule_application.common.customException.DuplicateEmailException;
+import com.example.schedule_application.common.customException.PasswordNotMatchException;
+import com.example.schedule_application.common.customException.UserNotFoundException;
 import com.example.schedule_application.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

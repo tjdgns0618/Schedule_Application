@@ -1,6 +1,5 @@
-package com.example.schedule_application.user.exception;
+package com.example.schedule_application.common.customException;
 
-import com.example.schedule_application.common.customException.ServiceException;
 import org.springframework.http.HttpStatus;
 
 public class UserNotFoundException extends ServiceException {
