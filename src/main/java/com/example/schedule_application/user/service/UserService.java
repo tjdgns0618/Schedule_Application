@@ -1,5 +1,6 @@
 package com.example.schedule_application.user.service;
 
+import com.example.schedule_application.common.config.PasswordEncoder;
 import com.example.schedule_application.schedule.exception.NoPermissionException;
 import com.example.schedule_application.user.dto.LoginRequest;
 import com.example.schedule_application.user.dto.SignUpRequest;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 존재하는 유저인지 검사
@@ -56,7 +58,9 @@ public class UserService {
         if(userRepository.existsByEmail(request.email()))
             throw new DuplicateEmailException();
 
-        User user = new User(request.name(), request.email(), request.password());
+        String encodedPassword = passwordEncoder.encode(request.password());
+
+        User user = new User(request.name(), request.email(), encodedPassword);
         User savedUser = userRepository.save(user);
 
         return UserAllDetailsResponse.from(savedUser);
@@ -73,7 +77,9 @@ public class UserService {
                 () -> new UserNotFoundException("해당 유저를 찾을 수 없습니다.(존재하지 않는 ID 혹은 일치하지 않는 PASSWORD)")
         );
 
-        if(!user.getPassword().equals(request.password())) {
+        boolean passwordMatch = passwordEncoder.matches(request.password(), user.getPassword());
+
+        if(!passwordMatch) {
             throw new PasswordNotMatchException();
         }
 
