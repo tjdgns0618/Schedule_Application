@@ -1,16 +1,13 @@
 package com.example.schedule_application.schedule.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
 
-@Getter
-public class CreateScheduleRequest {
+public record CreateScheduleRequest(@NotBlank(message = "제목이 비어있을 수 없습니다.")
+                                    String title,
 
-    @NotBlank(message = "제목이 비어있을 수 없습니다.")
-    private final String title;
-
-    @NotBlank(message = "내용이 있어야 합니다.")
-    private final String content;
+                                    @NotBlank(message = "내용이 있어야 합니다.")
+                                    String content
+) {
 
     public CreateScheduleRequest(String title, String content) {
         this.title = title;

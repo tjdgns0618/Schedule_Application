@@ -79,7 +79,7 @@ JSON
         "id": 1,
         "title": "일정 제목 1",
         "content": "일정 내용 1",
-        "userId": "유저 고유 식별자 1",
+        "userName": "일정 작성자명",
         "createdAt": "2026-04-16T18:00:00",
         "modifiedAt": "2026-04-16T18:00:00"
     },
@@ -87,7 +87,7 @@ JSON
         "id": 2,
         "title": "일정 제목 2",
         "content": "일정 내용 2",
-        "userId": "유저 고유 식별자 2",
+        "userName": "일정 작성자명",
         "createdAt": "2026-04-16T20:00:00",
         "modifiedAt": "2026-04-16T20:00:00"
     }
@@ -535,4 +535,4 @@ Error Response
 
 # ERD 이미지
 
-<img width="845" height="227" alt="image" src="https://github.com/user-attachments/assets/0a20595d-016d-410c-ba35-861e7697fe67" />
+<img width="975" height="235" alt="Image" src="https://github.com/user-attachments/assets/734e463d-77c4-4a12-9f6f-96ca449505c1" />
