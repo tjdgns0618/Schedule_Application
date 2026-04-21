@@ -27,6 +27,7 @@ public class UserService {
 
     /**
      * 존재하는 유저인지 검사
+     *
      * @param userId 유저 고유 번호
      * @return 유저 데이터
      */
@@ -39,23 +40,25 @@ public class UserService {
 
     /**
      * 권한이 있는지 검사하는 메서드
+     *
      * @param userId        권한자 유저 고유 번호
      * @param sessionUserId 클라이언트의 유저 고유 번호
      */
     public void validateOwner(Long userId, Long sessionUserId) {
-        if(!Objects.equals(userId, sessionUserId)) {
+        if (!Objects.equals(userId, sessionUserId)) {
             throw new NoPermissionException();
         }
     }
 
     /**
      * 회원가입
+     *
      * @param request 회원가입 하는 유저 데이터
      * @return 회원가입 완료된 유저 데이터(패스워드 제외)
      */
     @Transactional
     public UserAllDetailsResponse signUp(SignUpRequest request) {
-        if(userRepository.existsByEmail(request.email()))
+        if (userRepository.existsByEmail(request.email()))
             throw new DuplicateEmailException();
 
         String encodedPassword = passwordEncoder.encode(request.password());
@@ -68,6 +71,7 @@ public class UserService {
 
     /**
      * 로그인
+     *
      * @param request 로그인 유저 이메일, 패스워드
      * @return 로그인 완료된 유저 데이터(패스워드 제외)
      */
@@ -79,7 +83,7 @@ public class UserService {
 
         boolean passwordMatch = passwordEncoder.matches(request.password(), user.getPassword());
 
-        if(!passwordMatch) {
+        if (!passwordMatch) {
             throw new PasswordNotMatchException();
         }
 
@@ -88,6 +92,7 @@ public class UserService {
 
     /**
      * 모든 유저 정보 조회
+     *
      * @return 조회한 모든 유저 데이터 리스트
      */
     @Transactional(readOnly = true)
@@ -100,6 +105,7 @@ public class UserService {
 
     /**
      * 유저 하나 데이터 조회
+     *
      * @param userId 유저 고유 번호
      * @return 조회한 유저 데이터
      */
@@ -112,6 +118,7 @@ public class UserService {
 
     /**
      * 유저 데이터 수정
+     *
      * @param userId        유저 고유 번호
      * @param request       유저 수정 데이터
      * @param sessionUserId 클라이언트 유저 고유 번호
@@ -128,6 +135,7 @@ public class UserService {
 
     /**
      * 유저 삭제
+     *
      * @param userId        유저 고유 번호
      * @param sessionUserId 클라이언트 유저 고유 번호
      */

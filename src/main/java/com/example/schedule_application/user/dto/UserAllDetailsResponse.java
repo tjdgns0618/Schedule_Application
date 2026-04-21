@@ -11,7 +11,8 @@ public record UserAllDetailsResponse(Long id,
                                      LocalDateTime modifiedAt) {
 
     public static UserAllDetailsResponse from(User user) {
-        return new UserAllDetailsResponse(user.getId(),
+        return new UserAllDetailsResponse(
+                user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getCreatedAt(),

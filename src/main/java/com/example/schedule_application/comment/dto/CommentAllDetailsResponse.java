@@ -12,7 +12,8 @@ public record CommentAllDetailsResponse(Long id,
                                         LocalDateTime modifiedAt
 ) {
     public static CommentAllDetailsResponse from(Comment comment) {
-        return new CommentAllDetailsResponse(comment.getId(),
+        return new CommentAllDetailsResponse(
+                comment.getId(),
                 comment.getContent(),
                 comment.getSchedule().getTitle(),
                 comment.getUser().getName(),

@@ -22,6 +22,7 @@ public class UserController {
 
     /**
      * 회원가입
+     *
      * @param request 회원가입에 필요한 데이터
      * @return CREATED 응답과 회원가입된 유저 데이터
      */
@@ -34,12 +35,16 @@ public class UserController {
 
     /**
      * 로그인
+     *
      * @param request 로그인 요청 데이터
      * @param session 클라이언트 쿠키에 접근하기 위한 매개변수
      * @return OK 응답과 로그인된 유저의 비밀번호를 제외한 데이터
      */
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpSession session) {
+    public ResponseEntity<LoginResponse> login(
+            @Valid @RequestBody LoginRequest request,
+            HttpSession session
+    ) {
         User user = userService.login(request);
         SessionUser sessionUser = SessionUser.from(user);
         session.setAttribute("loginUser", sessionUser);
@@ -50,6 +55,7 @@ public class UserController {
 
     /**
      * 로그아웃
+     *
      * @param session 클라이언트 쿠키에 접근하기 위한 매개변수
      * @return NO_CONTENT
      */
@@ -64,6 +70,7 @@ public class UserController {
 
     /**
      * DB에 존재하는 모든 유저를 조회
+     *
      * @return DB에 존재하는 모든 유저 데이터 리스트
      */
     @GetMapping
@@ -75,6 +82,7 @@ public class UserController {
 
     /**
      * 고유 번호에 해당하는 유저를 조회
+     *
      * @param userId 유저 고유 번호
      * @return 조회한 유저의 데이터
      */
@@ -87,6 +95,7 @@ public class UserController {
 
     /**
      * 유저 정보를 수정
+     *
      * @param sessionUser 클라이언트의 로그인 상태를 서버에 저장하기 매개변수
      * @param userId      유저 고유 번호
      * @param request     수정 요청 데이터
@@ -94,7 +103,7 @@ public class UserController {
      */
     @PutMapping("/{userId}")
     public ResponseEntity<UserAllDetailsResponse> updateUser(
-            @SessionAttribute(name = "loginUser", required = false)SessionUser sessionUser,
+            @SessionAttribute(name = "loginUser", required = false) SessionUser sessionUser,
             @PathVariable Long userId,
             @Valid @RequestBody UpdateUserRequest request
     ) {
@@ -106,6 +115,7 @@ public class UserController {
 
     /**
      * 유저 삭제
+     *
      * @param userId  유저 고유 번호
      * @param session 클라이언트의 쿠키 데이터
      * @return NO_CONTENT
@@ -125,10 +135,11 @@ public class UserController {
 
     /**
      * 쿠키에서 세션 정보가 존재하는지 검사
+     *
      * @param sessionUser 클라이언트의 쿠키 데이터
      */
     private void validateSessionUser(SessionUser sessionUser) {
-        if(sessionUser == null) {
+        if (sessionUser == null) {
             throw new LoginRequiredException();
         }
     }

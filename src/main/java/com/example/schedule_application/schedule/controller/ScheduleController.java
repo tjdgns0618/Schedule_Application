@@ -6,6 +6,10 @@ import com.example.schedule_application.user.dto.SessionUser;
 import com.example.schedule_application.common.customException.LoginRequiredException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,10 +55,17 @@ public class ScheduleController {
      * @return OK응답과 함께 모든 일정 데이터들
      */
     @GetMapping
-    public ResponseEntity<List<ScheduleAllDetailsResponse>> getAllSchedule() {
-        List<ScheduleAllDetailsResponse> getScheduleResponseList = scheduleService.findAllSchedule();
+    public ResponseEntity<Page<ScheduleAllDetailsResponse>> getAllSchedule(
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = "modifiedAt",
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable
+    ) {
+        Page<ScheduleAllDetailsResponse> response = scheduleService.findAllSchedule(pageable);
 
-        return new ResponseEntity<>(getScheduleResponseList, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**

@@ -8,6 +8,8 @@ import com.example.schedule_application.schedule.repository.ScheduleRepository;
 import com.example.schedule_application.user.entity.User;
 import com.example.schedule_application.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,13 +69,11 @@ public class ScheduleService {
      * @return 모든 일정의 데이터 리스트
      */
     @Transactional(readOnly = true)
-    public List<ScheduleAllDetailsResponse> findAllSchedule() {
-        List<Schedule> scheduleList = scheduleRepository.findAll();
+    public Page<ScheduleAllDetailsResponse> findAllSchedule(Pageable pageable) {
+        Page<Schedule> scheduleList = scheduleRepository.findAll(pageable);
 
 
-
-        return scheduleList.stream()
-                .map(ScheduleAllDetailsResponse::from).toList();
+        return scheduleList.map(ScheduleAllDetailsResponse::from);
     }
 
     /**
@@ -98,7 +98,11 @@ public class ScheduleService {
      * @return 수정 완료된 일정 데이터
      */
     @Transactional
-    public ScheduleAllDetailsResponse updateSchedule(Long userId, UpdateScheduleRequest request, Long scheduleId) {
+    public ScheduleAllDetailsResponse updateSchedule(
+            Long userId,
+            UpdateScheduleRequest request,
+            Long scheduleId
+    ) {
         Schedule schedule = validateSchedule(scheduleId);
         validateOwner(schedule, userId);
         schedule.updateSchedule(request.title(), request.content());
