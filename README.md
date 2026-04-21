@@ -1,7 +1,6 @@
 ## 목차
 1. API 명세서
 2. ERD 이미지
-3. 프로젝트 구조
 
 ---
 
@@ -68,6 +67,7 @@ Description: 저장된 일정 목록을 전체 조회합니다.
 
 Request
 - Body `없음`
+- Query Parameters : `?page=0&size=10` `필수는 아닙니다.`
 
 ---
 
@@ -76,20 +76,29 @@ Response `(200 OK)`
 JSON
 [
     {
+        "id": 10,
+        "title": "일정 제목 10",
+        "content": "일정 내용 10",
+        "userName": "일정 작성자명",
+        "createdAt": "2026-04-16T22:00:00",
+        "modifiedAt": "2026-04-16T22:00:00"
+    },
+    {
+        "id": 9,
+        "title": "일정 제목 9",
+        "content": "일정 내용 9",
+        "userName": "일정 작성자명",
+        "createdAt": "2026-04-16T20:00:00",
+        "modifiedAt": "2026-04-16T20:00:00"
+    },
+    ...
+    {
         "id": 1,
         "title": "일정 제목 1",
         "content": "일정 내용 1",
         "userName": "일정 작성자명",
         "createdAt": "2026-04-16T18:00:00",
         "modifiedAt": "2026-04-16T18:00:00"
-    },
-    {
-        "id": 2,
-        "title": "일정 제목 2",
-        "content": "일정 내용 2",
-        "userName": "일정 작성자명",
-        "createdAt": "2026-04-16T20:00:00",
-        "modifiedAt": "2026-04-16T20:00:00"
     }
 ]
 ```

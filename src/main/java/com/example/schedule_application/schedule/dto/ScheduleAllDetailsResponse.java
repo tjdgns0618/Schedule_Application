@@ -12,7 +12,8 @@ public record ScheduleAllDetailsResponse(Long id,
                                          LocalDateTime modifiedAt) {
 
     public static ScheduleAllDetailsResponse from(Schedule schedule) {
-        return new ScheduleAllDetailsResponse(schedule.getId(),
+        return new ScheduleAllDetailsResponse(
+                schedule.getId(),
                 schedule.getTitle(),
                 schedule.getContent(),
                 schedule.getUser().getName(),
