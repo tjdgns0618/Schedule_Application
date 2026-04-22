@@ -1,7 +1,6 @@
 package com.example.schedule_application.user.service;
 
 import com.example.schedule_application.common.config.PasswordEncoder;
-import com.example.schedule_application.common.customException.NoPermissionException;
 import com.example.schedule_application.user.dto.LoginRequest;
 import com.example.schedule_application.user.dto.SignUpRequest;
 import com.example.schedule_application.user.dto.UpdateUserRequest;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
