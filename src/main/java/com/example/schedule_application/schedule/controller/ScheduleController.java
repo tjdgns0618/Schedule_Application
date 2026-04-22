@@ -14,8 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/schedules")
@@ -57,8 +55,6 @@ public class ScheduleController {
     @GetMapping
     public ResponseEntity<Page<ScheduleAllDetailsResponse>> getAllSchedule(
             @PageableDefault(
-                    page = 0,
-                    size = 10,
                     sort = "modifiedAt",
                     direction = Sort.Direction.DESC
             ) Pageable pageable

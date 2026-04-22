@@ -1,5 +1,6 @@
 package com.example.schedule_application.user.controller;
 
+import com.example.schedule_application.common.customException.NoPermissionException;
 import com.example.schedule_application.user.dto.*;
 import com.example.schedule_application.user.entity.User;
 import com.example.schedule_application.common.customException.LoginRequiredException;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +21,29 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    /**
+     * 쿠키에서 세션 정보가 존재하는지 검사
+     *
+     * @param sessionUser 클라이언트의 쿠키 데이터
+     */
+    private void validateSessionUser(SessionUser sessionUser) {
+        if (sessionUser == null) {
+            throw new LoginRequiredException();
+        }
+    }
+
+    /**
+     * 권한이 있는지 검사하는 메서드
+     *
+     * @param userId        권한자 유저 고유 번호
+     * @param sessionUserId 클라이언트의 유저 고유 번호
+     */
+    public void validateOwner(Long userId, Long sessionUserId) {
+        if (!Objects.equals(userId, sessionUserId)) {
+            throw new NoPermissionException();
+        }
+    }
 
     /**
      * 회원가입
@@ -108,7 +133,8 @@ public class UserController {
             @Valid @RequestBody UpdateUserRequest request
     ) {
         validateSessionUser(sessionUser);
-        UserAllDetailsResponse userResponse = userService.updateUser(userId, request, sessionUser.id());
+        validateOwner(userId, sessionUser.id());
+        UserAllDetailsResponse userResponse = userService.updateUser(userId, request);
 
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
@@ -125,22 +151,13 @@ public class UserController {
             @PathVariable Long userId,
             HttpSession session
     ) {
-        SessionUser user = (SessionUser) session.getAttribute("loginUser");
-        validateSessionUser(user);
-        userService.deleteUser(userId, user.id());
+        // HttpSession에서 getAttribute를 통해서 가져오는 방법
+        SessionUser sessionUser = (SessionUser) session.getAttribute("loginUser");
+        validateSessionUser(sessionUser);
+        validateOwner(userId, sessionUser.id());
+        userService.deleteUser(userId);
         session.invalidate();
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    /**
-     * 쿠키에서 세션 정보가 존재하는지 검사
-     *
-     * @param sessionUser 클라이언트의 쿠키 데이터
-     */
-    private void validateSessionUser(SessionUser sessionUser) {
-        if (sessionUser == null) {
-            throw new LoginRequiredException();
-        }
     }
 }

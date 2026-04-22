@@ -39,18 +39,6 @@ public class UserService {
     }
 
     /**
-     * 권한이 있는지 검사하는 메서드
-     *
-     * @param userId        권한자 유저 고유 번호
-     * @param sessionUserId 클라이언트의 유저 고유 번호
-     */
-    public void validateOwner(Long userId, Long sessionUserId) {
-        if (!Objects.equals(userId, sessionUserId)) {
-            throw new NoPermissionException();
-        }
-    }
-
-    /**
      * 회원가입
      *
      * @param request 회원가입 하는 유저 데이터
@@ -121,12 +109,11 @@ public class UserService {
      *
      * @param userId        유저 고유 번호
      * @param request       유저 수정 데이터
-     * @param sessionUserId 클라이언트 유저 고유 번호
      * @return 수정된 유저 데이터
      */
     @Transactional
-    public UserAllDetailsResponse updateUser(Long userId, UpdateUserRequest request, Long sessionUserId) {
-        validateOwner(userId, sessionUserId);
+    public UserAllDetailsResponse updateUser(Long userId, UpdateUserRequest request) {
+
         User user = userValidation(userId);
         user.updateUserDetails(request.name(), request.email());
 
@@ -136,12 +123,10 @@ public class UserService {
     /**
      * 유저 삭제
      *
-     * @param userId        유저 고유 번호
-     * @param sessionUserId 클라이언트 유저 고유 번호
+     * @param userId 유저 고유 번호
      */
     @Transactional
-    public void deleteUser(Long userId, Long sessionUserId) {
-        validateOwner(userId, sessionUserId);
+    public void deleteUser(Long userId) {
         userValidation(userId);
 
         userRepository.deleteById(userId);
